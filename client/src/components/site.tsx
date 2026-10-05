@@ -104,7 +104,7 @@ export function CheckList({ items, columns = 1 }: { items: ReactNode[]; columns?
     <ul className={`grid gap-x-10 gap-y-3 ${columns === 2 ? "sm:grid-cols-2" : ""}`}>
       {items.map((item, i) => (
         <li key={i} className="flex gap-3">
-          <Check className="size-5 text-brand shrink-0 mt-[3px]" strokeWidth={2.5} aria-hidden />
+          <Check className="size-5 text-leaf shrink-0 mt-[3px]" strokeWidth={3} aria-hidden />
           <span>{item}</span>
         </li>
       ))}
@@ -118,7 +118,7 @@ export function NumberedList({ items }: { items: { title: string; text: ReactNod
     <ol className="border-t border-line">
       {items.map((item, i) => (
         <li key={item.title} className="grid gap-2 md:grid-cols-12 md:gap-8 py-7 border-b border-line">
-          <span className="md:col-span-1 font-display font-semibold text-brand tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+          <span className="md:col-span-1 font-display font-semibold text-accent-text tabular-nums">{String(i + 1).padStart(2, "0")}</span>
           <h3 className="md:col-span-4 h-sub">{item.title}</h3>
           <p className="md:col-span-7">{item.text}</p>
         </li>
@@ -133,7 +133,7 @@ export function Columns({ items, columns = 3 }: { items: { title: string; text: 
   return (
     <div className={`grid gap-x-10 gap-y-10 ${cols}`}>
       {items.map(item => (
-        <div key={item.title} className="border-t-2 border-ink pt-5">
+        <div key={item.title} className="border-t-2 border-leaf pt-5">
           <h3 className="h-sub mb-2">{item.title}</h3>
           <p className="text-[0.9375rem]">{item.text}</p>
           {item.href && <Link href={item.href} className="link-arrow mt-4 text-sm">{item.linkLabel ?? "Read more"} <ArrowRight /></Link>}
@@ -151,7 +151,7 @@ export function FAQ({ items }: { items: { q: string; a: ReactNode }[] }) {
         <details key={item.q} className="group border-b border-line">
           <summary className="flex items-start justify-between gap-6 py-5 list-none [&::-webkit-details-marker]:hidden">
             <span className="font-display font-semibold text-ink text-lg">{item.q}</span>
-            <Plus className="size-5 text-brand shrink-0 mt-1 transition-transform group-open:rotate-45" aria-hidden />
+            <Plus className="size-5 text-accent shrink-0 mt-1 transition-transform group-open:rotate-45" aria-hidden />
           </summary>
           <div className="pb-6 pr-10">{item.a}</div>
         </details>
@@ -165,7 +165,7 @@ export function Facts({ items }: { items: { value: string; label: string }[] }) 
   return (
     <dl className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8">
       {items.map(f => (
-        <div key={f.label} className="border-l-2 border-brand pl-5">
+        <div key={f.label} className="border-l-2 border-leaf pl-5">
           <dt className="font-display font-bold text-ink text-3xl md:text-4xl tracking-tight">{f.value}</dt>
           <dd className="text-sm text-muted mt-1">{f.label}</dd>
         </div>
@@ -179,7 +179,7 @@ export function CTA({ title, text, image = "highlands.jpg", primary = { label: "
   return (
     <section className="relative isolate">
       <img src={`/images/${image}`} alt="" loading="lazy" decoding="async" className="absolute inset-0 -z-20 w-full h-full object-cover" />
-      <div className="absolute inset-0 -z-10 bg-[#0b1f17]/75" />
+      <div className="absolute inset-0 -z-10 bg-[#12301a]/80" />
       <div className="container py-20 md:py-28">
         <div className="max-w-2xl">
           <h2 className="font-display font-bold text-white text-3xl md:text-[2.75rem] leading-[1.1]">{title}</h2>

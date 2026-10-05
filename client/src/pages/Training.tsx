@@ -142,7 +142,7 @@ export default function Training() {
           </ul>
         )}
         {sessions && sessions.length === 0 && (
-          <div className="border-l-2 border-brand pl-6 max-w-2xl">
+          <div className="border-l-2 border-leaf pl-6 max-w-2xl">
             <p className="h-sub">New public dates are being scheduled</p>
             <p className="mt-2">Tell us you're interested and we'll let you know as soon as they are confirmed. We can also run the course privately for your team on a date that suits you.</p>
             <div className="mt-5"><ButtonLink href="/contact" arrow>Register your interest</ButtonLink></div>

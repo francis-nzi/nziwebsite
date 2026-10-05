@@ -7,10 +7,10 @@ const linkClass = "text-[0.9375rem] text-white/70 hover:text-white transition-co
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0f1f18] text-white">
+    <footer className="bg-brand-dark text-white border-t-4 border-leaf">
       <div className="container py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-12">
         <div className="lg:col-span-4">
-          <Link href="/" aria-label="Net Zero International — home" className="inline-block bg-white rounded-[3px] px-3 py-2"><Logo /></Link>
+          <Link href="/" aria-label="Net Zero International — home" className="inline-block bg-white rounded-[3px] px-4 py-3"><Logo /></Link>
           <p className="text-white/70 mt-6 max-w-xs text-[0.9375rem]">
             Carbon accounting, life cycle assessment and net zero training for organisations that want numbers they can stand behind.
           </p>

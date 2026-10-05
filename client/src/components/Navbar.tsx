@@ -66,7 +66,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-line">
       <style>{`.nav-link{font-size:.9375rem;font-weight:500;color:var(--color-ink);padding:.5rem .25rem;transition:color .15s}.nav-link:hover{color:var(--color-brand)}`}</style>
-      <div className="container flex items-center justify-between h-[72px]">
+      <div className="container flex items-center justify-between h-20">
         <Link href="/" aria-label="Net Zero International — home"><Logo /></Link>
 
         <nav aria-label="Main" className="hidden lg:flex items-center gap-7">
@@ -87,7 +87,7 @@ export default function Navbar() {
       </div>
 
       {menuOpen && (
-        <div className="lg:hidden border-t border-line bg-white max-h-[calc(100dvh-72px)] overflow-y-auto">
+        <div className="lg:hidden border-t border-line bg-white max-h-[calc(100dvh-80px)] overflow-y-auto">
           <nav aria-label="Mobile" className="container py-4">
             <p className="eyebrow pt-2 pb-1">Services</p>
             {SERVICES.map(s => <Link key={s.href} href={s.href} className="block py-2.5 font-medium text-ink">{s.title}</Link>)}

@@ -148,7 +148,7 @@ export default function Contact() {
           <ol className="space-y-3">
             {NEXT_STEPS.map((step, i) => (
               <li key={step} className="flex gap-4">
-                <span className="font-display font-semibold text-brand tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-display font-semibold text-accent-text tabular-nums">{String(i + 1).padStart(2, "0")}</span>
                 <span>{step}</span>
               </li>
             ))}

@@ -51,7 +51,7 @@ function Testimonials() {
     <Section eyebrow="Clients" title="What clients say">
       <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
         {data.map(t => (
-          <figure key={t.id} className="border-t-2 border-ink pt-6">
+          <figure key={t.id} className="border-t-2 border-leaf pt-6">
             <blockquote className="text-lg text-ink leading-relaxed">“{t.quote}”</blockquote>
             <figcaption className="mt-5 text-sm">
               <span className="font-semibold text-ink">{t.clientName}</span>

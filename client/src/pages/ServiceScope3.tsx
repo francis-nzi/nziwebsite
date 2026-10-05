@@ -37,7 +37,7 @@ function CategoryList({ heading, items, start }: { heading: string; items: strin
       <ol className="border-t border-line">
         {items.map((name, i) => (
           <li key={name} className="flex gap-4 py-2.5 border-b border-line text-[0.9375rem]">
-            <span className="w-6 shrink-0 font-display font-semibold text-brand tabular-nums">{start + i}</span>
+            <span className="w-6 shrink-0 font-display font-semibold text-accent-text tabular-nums">{start + i}</span>
             <span>{name}</span>
           </li>
         ))}
