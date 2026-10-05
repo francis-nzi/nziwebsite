@@ -1,0 +1,79 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+
+  --color-ink: #13211b;        /* headings */
+  --color-body: #3c4943;       /* paragraphs */
+  --color-muted: #66736c;      /* captions, meta */
+  --color-line: #e2e7e3;       /* hairlines */
+  --color-tint: #f4f7f4;       /* the only off-white, used sparingly */
+  --color-brand: #17603f;      /* NZI green */
+  --color-brand-dark: #0e432c;
+  --color-brand-soft: #e6f0ea;
+  --color-alert: #a3401c;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    @apply bg-white text-body font-sans antialiased;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  h1, h2, h3, h4 { @apply font-display text-ink; letter-spacing: -0.02em; line-height: 1.15; text-wrap: balance; }
+  p { text-wrap: pretty; }
+  a, button, select, summary, label[for], input[type="checkbox"] { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+  ::selection { background: var(--color-brand); color: #fff; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+}
+
+@layer components {
+  .container { width: 100%; max-width: 76rem; margin-inline: auto; padding-inline: 1.25rem; }
+  @media (min-width: 768px) { .container { padding-inline: 2rem; } }
+  .container-narrow { width: 100%; max-width: 46rem; margin-inline: auto; padding-inline: 1.25rem; }
+
+  .eyebrow { @apply text-brand font-semibold text-[0.8125rem] uppercase; letter-spacing: 0.12em; }
+  .h-display { @apply font-display font-bold text-ink text-[2.25rem] md:text-[3rem] lg:text-[3.5rem]; line-height: 1.06; letter-spacing: -0.03em; }
+  .h-section { @apply font-display font-bold text-ink text-[1.75rem] md:text-[2.25rem]; line-height: 1.12; }
+  .h-sub { @apply font-display font-semibold text-ink text-xl; line-height: 1.25; }
+  .lead { @apply text-body text-lg md:text-xl; line-height: 1.55; }
+
+  .btn { @apply inline-flex items-center justify-center gap-2 font-semibold text-[0.9375rem] px-5 h-12 rounded-[3px] transition-colors whitespace-nowrap; }
+  .btn-primary { @apply bg-brand text-white hover:bg-brand-dark; }
+  .btn-outline { @apply border border-ink/25 text-ink hover:border-ink hover:bg-ink hover:text-white; }
+  .btn-light { @apply bg-white text-ink hover:bg-brand-soft; }
+  .btn-ghost-light { @apply border border-white/60 text-white hover:bg-white hover:text-ink; }
+  .btn-sm { @apply h-10 px-4 text-sm; }
+  .btn:disabled { @apply opacity-50 cursor-not-allowed; }
+
+  .link-arrow { @apply inline-flex items-center gap-1.5 font-semibold text-brand hover:text-brand-dark; }
+  .link-arrow svg { @apply size-4 transition-transform; }
+  .link-arrow:hover svg, a:hover > .link-arrow svg { transform: translateX(3px); }
+  .text-link { @apply text-brand underline underline-offset-4 decoration-brand/40 hover:decoration-brand; }
+
+  .field-label { @apply block text-sm font-semibold text-ink mb-1.5; }
+  .field { @apply block w-full bg-white border border-ink/25 rounded-[3px] px-3.5 h-12 text-ink text-base placeholder:text-muted/70; }
+  textarea.field { @apply h-auto py-3; }
+  .field:focus { outline: 2px solid var(--color-brand); outline-offset: 0; border-color: var(--color-brand); }
+
+  .photo { @apply block w-full h-full object-cover; }
+
+  /* Blog article body (HTML from the database) */
+  .article { @apply text-body text-[1.0625rem]; line-height: 1.75; }
+  .article h2 { @apply font-display font-bold text-ink text-2xl mt-12 mb-4; }
+  .article h3 { @apply font-display font-semibold text-ink text-xl mt-8 mb-3; }
+  .article p { @apply mb-5; }
+  .article ul, .article ol { @apply mb-5 pl-6; }
+  .article ul { list-style: disc; }
+  .article ol { list-style: decimal; }
+  .article li { @apply mb-2; }
+  .article a { @apply text-brand underline underline-offset-4; }
+  .article strong { @apply text-ink font-semibold; }
+}

@@ -1,0 +1,21 @@
+# Render blueprint: the web service. The database is external (Supabase); set DATABASE_URL in the dashboard.
+services:
+  - type: web
+    name: nzi-website
+    runtime: node
+    region: frankfurt
+    plan: starter
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build
+    startCommand: pnpm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: DATABASE_URL
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: NOTIFY_TO
+        sync: false
+      - key: NOTIFY_FROM
+        value: Net Zero International Website <website@netzero.international>

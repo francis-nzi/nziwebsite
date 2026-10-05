@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow admin/API paths
+Disallow: /api/
+Disallow: /api/trpc/
+
+# Sitemap
+Sitemap: https://netzero.international/sitemap.xml
