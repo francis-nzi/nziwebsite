@@ -3,7 +3,7 @@ Allow: /
 
 # Disallow admin/API paths
 Disallow: /api/
-Disallow: /api/trpc/
+Disallow: /admin
 
 # Sitemap
 Sitemap: https://netzero.international/sitemap.xml

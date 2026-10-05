@@ -48,8 +48,11 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/15">
-        <div className="container py-6 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between text-sm text-white/55">
-          <p>© {new Date().getFullYear()} Net Zero International. All rights reserved.</p>
+        <div className="container py-6 flex flex-col sm:flex-row gap-3 sm:items-end sm:justify-between text-sm text-white/55">
+          <p>
+            © {new Date().getFullYear()} Net Zero International. Registered in England and Wales, company number 13587676.
+            <span className="block">Registered office: 167-169 Great Portland Street, London W1W 5PF.</span>
+          </p>
           <p className="flex gap-6">
             <Link href="/privacy" className="hover:text-white">Privacy</Link>
             <a href="/sitemap.xml" className="hover:text-white">Sitemap</a>

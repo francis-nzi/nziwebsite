@@ -18,6 +18,7 @@ import International from "./pages/International";
 import InternationalUK from "./pages/InternationalUK";
 import InternationalRegion from "./pages/InternationalRegion";
 import Privacy from "./pages/Privacy";
+import Admin from "./pages/Admin";
 
 function Router() {
   return (
@@ -47,6 +48,7 @@ function Router() {
       <Route path="/international/:region" component={InternationalRegion} />
 
       <Route path="/privacy" component={Privacy} />
+      <Route path="/admin" component={Admin} />
 
       {/* Fallback */}
       <Route path="/404" component={NotFound} />

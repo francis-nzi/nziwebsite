@@ -6,7 +6,7 @@ const website = pgSchema(DB_SCHEMA);
 
 export const trainingSessions = website.table("training_sessions", {
   id: serial("id").primaryKey(),
-  // Stable reference from content/training-sessions.json, used to update a session in place.
+  // Internal unique reference, generated when a date is created in the admin area.
   ref: varchar("ref", { length: 100 }).notNull().unique(),
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
@@ -22,6 +22,7 @@ export const trainingSessions = website.table("training_sessions", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 export type TrainingSession = typeof trainingSessions.$inferSelect;
+export type InsertTrainingSession = typeof trainingSessions.$inferInsert;
 
 export const bookings = website.table("bookings", {
   id: serial("id").primaryKey(),
@@ -57,6 +58,7 @@ export const contactEnquiries = website.table("contact_enquiries", {
   phone: varchar("phone", { length: 30 }),
   serviceInterest: varchar("serviceInterest", { length: 40 }).$type<(typeof SERVICE_INTERESTS)[number]>().default("general").notNull(),
   message: text("message").notNull(),
+  handled: boolean("handled").default(false).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 export type InsertContactEnquiry = typeof contactEnquiries.$inferInsert;

@@ -1,13 +1,13 @@
 /**
  * Runs at server start: creates the tables if they don't exist, then copies the
  * files in /content into the database. The content files are the source of truth
- * for blog posts, course dates and testimonials — edit them and redeploy.
+ * for blog posts and testimonials — edit them and redeploy. Course dates are managed
+ * in the admin area (/admin), not from a file.
  * Bookings, enquiries and the booked-places count live only in the database.
  */
 import { sql } from "drizzle-orm";
-import { blogPosts, testimonials, trainingSessions } from "../drizzle/schema";
+import { blogPosts, testimonials } from "../drizzle/schema";
 import posts from "../content/blog-posts.json";
-import sessions from "../content/training-sessions.json";
 import quotes from "../content/testimonials.json";
 import { getDb, getPool } from "./db";
 
@@ -37,10 +37,10 @@ CREATE TABLE IF NOT EXISTS website.blog_posts (
   category varchar(30) NOT NULL DEFAULT 'industry_news', author varchar(150) NOT NULL DEFAULT 'Net Zero International',
   "featuredImage" varchar(500), "seoTitle" varchar(200), "seoDescription" varchar(300), published boolean NOT NULL DEFAULT false,
   "publishedAt" timestamp, "createdAt" timestamp NOT NULL DEFAULT now(), "updatedAt" timestamp NOT NULL DEFAULT now());
+ALTER TABLE website.contact_enquiries ADD COLUMN IF NOT EXISTS handled boolean NOT NULL DEFAULT false;
 `;
 
 type PostFile = { title: string; slug: string; excerpt?: string; content?: string; category?: string; author?: string; featuredImage?: string; seoTitle?: string; seoDescription?: string; published?: boolean; publishedAt?: string };
-type SessionFile = { ref: string; title: string; description?: string; date: string; time: string; durationHours?: number; deliveryMode?: string; location?: string; capacity?: number; priceGbp?: number; status?: string };
 type QuoteFile = { ref: string; clientName: string; organisation: string; role?: string; quote: string; serviceType?: string; displayOrder?: number };
 
 export async function bootstrapDatabase() {
@@ -62,16 +62,6 @@ export async function bootstrapDatabase() {
     await db.insert(blogPosts).values(values).onConflictDoUpdate({ target: blogPosts.slug, set: { ...values, updatedAt: new Date() } });
   }
 
-  for (const s of sessions as SessionFile[]) {
-    const values = {
-      ref: s.ref, title: s.title, description: s.description ?? null, date: s.date, time: s.time,
-      durationHours: s.durationHours ?? 6, deliveryMode: (s.deliveryMode ?? "online") as never, location: s.location ?? null,
-      capacity: s.capacity ?? 12, priceGbp: s.priceGbp ?? null, status: (s.status ?? "active") as never,
-    };
-    // bookedCount is deliberately left out so redeploying never resets real bookings.
-    await db.insert(trainingSessions).values(values).onConflictDoUpdate({ target: trainingSessions.ref, set: values });
-  }
-
   const refs = (quotes as QuoteFile[]).map(q => q.ref);
   for (const q of quotes as QuoteFile[]) {
     const values = { ref: q.ref, clientName: q.clientName, organisation: q.organisation, role: q.role ?? null, quote: q.quote, serviceType: q.serviceType ?? null, displayOrder: q.displayOrder ?? 0, approved: true };
@@ -80,5 +70,5 @@ export async function bootstrapDatabase() {
   // A testimonial removed from the file stops showing.
   await db.update(testimonials).set({ approved: false }).where(refs.length ? sql`${testimonials.ref} NOT IN (${sql.join(refs.map(r => sql`${r}`), sql`, `)})` : sql`true`);
 
-  console.log(`[Database] Ready — ${posts.length} posts, ${sessions.length} course dates, ${quotes.length} testimonials synced.`);
+  console.log(`[Database] Ready — ${posts.length} posts, ${quotes.length} testimonials synced.`);
 }

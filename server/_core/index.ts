@@ -7,7 +7,7 @@ import { bootstrapDatabase } from "../bootstrap";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 
-/** Small in-memory limiter for the form endpoints: 8 submissions per IP per 10 minutes. */
+/** Small in-memory limiter for the public forms and admin login: 8 attempts per IP per 10 minutes. */
 function formRateLimit(): express.RequestHandler {
   const hits = new Map<string, number[]>();
   const WINDOW = 10 * 60_000;
@@ -17,7 +17,8 @@ function formRateLimit(): express.RequestHandler {
     hits.forEach((times, ip) => { if (times.every(t => t < cutoff)) hits.delete(ip); });
   }, WINDOW).unref();
   return (req, res, next) => {
-    if (req.method !== "POST") return next();
+    // Only the public forms and the admin login are limited; signed-in admin work is not.
+    if (req.method !== "POST" || !/contact\.submitEnquiry|training\.createBooking|admin\.login/.test(req.path)) return next();
     const ip = (req.headers["cf-connecting-ip"] as string) || req.ip || "unknown";
     const now = Date.now();
     const recent = (hits.get(ip) ?? []).filter(t => t > now - WINDOW);

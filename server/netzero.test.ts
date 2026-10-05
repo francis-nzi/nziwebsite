@@ -12,10 +12,12 @@ vi.mock("./db", () => ({
   getPublishedBlogPosts: vi.fn().mockResolvedValue([{ id: 1, slug: "a-post" }]),
   getBlogPostBySlug: vi.fn().mockResolvedValue(undefined),
   getBlogPostCount: vi.fn().mockResolvedValue(1),
+  adminListSessions: vi.fn().mockResolvedValue([]), adminCreateSession: vi.fn(), adminUpdateSession: vi.fn(), adminDeleteSession: vi.fn(),
+  adminListBookings: vi.fn().mockResolvedValue([]), adminSetBookingStatus: vi.fn(), adminListEnquiries: vi.fn().mockResolvedValue([]), adminSetEnquiryHandled: vi.fn(),
 }));
 vi.mock("./_core/notification", () => ({ notifyOwner: vi.fn().mockResolvedValue(true) }));
 
-const caller = appRouter.createCaller({ req: {} as never, res: {} as never });
+const caller = appRouter.createCaller({ req: { headers: {} } as never, res: {} as never });
 const enquiry = { firstName: "Jane", lastName: "Doe", email: "jane@example.com", message: "We need a carbon reduction plan." };
 const booking = { sessionId: 1, firstName: "Jane", lastName: "Doe", email: "jane@example.com", organisation: "Acme", participants: 2 };
 
@@ -62,5 +64,17 @@ describe("blog", () => {
   });
   it("returns null for an unknown post", async () => {
     await expect(caller.blog.getPost({ slug: "missing" })).resolves.toBeNull();
+  });
+});
+
+describe("admin", () => {
+  it("refuses admin data without a signed-in session", async () => {
+    await expect(caller.admin.listEnquiries()).rejects.toThrow("Please sign in");
+    await expect(caller.admin.listBookings()).rejects.toThrow("Please sign in");
+    await expect(caller.admin.deleteSession({ id: 1 })).rejects.toThrow("Please sign in");
+  });
+  it("refuses a forged cookie", async () => {
+    const forged = appRouter.createCaller({ req: { headers: { cookie: "nzi_admin=9999999999999.deadbeef" } } as never, res: {} as never });
+    await expect(forged.admin.listEnquiries()).rejects.toThrow("Please sign in");
   });
 });
