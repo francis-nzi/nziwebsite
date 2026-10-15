@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
+import { serveRendered } from "./ssr";
 
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
@@ -58,15 +59,15 @@ export function serveStatic(app: Express) {
     );
   }
 
-  app.use(express.static(distPath, { maxAge: "1h", setHeaders: (res, file) => { if (file.includes(`${path.sep}assets${path.sep}`)) res.setHeader("Cache-Control", "public, max-age=31536000, immutable"); else if (file.endsWith(".html")) res.setHeader("Cache-Control", "no-cache"); } }));
+  app.use(express.static(distPath, { index: false, maxAge: "1h", setHeaders: (res, file) => { if (file.includes(`${path.sep}assets${path.sep}`)) res.setHeader("Cache-Control", "public, max-age=31536000, immutable"); else if (file.endsWith(".html")) res.setHeader("Cache-Control", "no-cache"); } }));
 
-  // fall through to index.html if the file doesn't exist
-  app.use("*", (req, res) => {
-    // A missing file (image, script) is a real 404; only page URLs get the app shell.
+  // A missing file (image, script) is a real 404; page URLs are rendered on the server.
+  app.use((req, res, next) => {
     if (path.extname(req.path) || req.path.startsWith("/api/")) {
       res.status(404).type("text/plain").send("Not found");
       return;
     }
-    res.sendFile(path.resolve(distPath, "index.html"));
+    next();
   });
+  serveRendered(app, distPath);
 }

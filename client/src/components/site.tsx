@@ -7,9 +7,10 @@ import { Link } from "wouter";
 import { ArrowRight, Check, Plus } from "lucide-react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import SEOHead from "./SEOHead";
+import SEOHead, { SITE_URL as SEO_SITE_URL } from "./SEOHead";
+import { safeJson } from "@/lib/ssr";
 
-export const SITE_URL = "https://netzero.international";
+export const SITE_URL = SEO_SITE_URL;
 export const CONTACT_EMAIL = "info@netzero.international";
 
 type SEO = { title?: string; description?: string; canonical: string; schema?: object; noIndex?: boolean; ogImage?: string };
@@ -143,8 +144,25 @@ export function Columns({ items, columns = 3 }: { items: { title: string; text: 
   );
 }
 
-/** Question-and-answer list that opens in place. */
+/** Plain text of a React node, for structured data. */
+function textOf(node: ReactNode): string {
+  if (node == null || typeof node === "boolean") return "";
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(textOf).join("");
+  if (typeof node === "object" && "props" in node) return textOf((node as { props: { children?: ReactNode } }).props.children);
+  return "";
+}
+
+/**
+ * Question-and-answer list that opens in place. Also publishes the questions as
+ * FAQPage structured data, which search engines and AI assistants read directly.
+ */
 export function FAQ({ items }: { items: { q: string; a: ReactNode }[] }) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map(item => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: textOf(item.a).trim() } })),
+  };
   return (
     <div className="border-t border-line max-w-3xl">
       {items.map(item => (
@@ -156,7 +174,26 @@ export function FAQ({ items }: { items: { q: string; a: ReactNode }[] }) {
           <div className="pb-6 pr-10">{item.a}</div>
         </details>
       ))}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJson(schema) }} />
     </div>
+  );
+}
+
+/**
+ * A question as a heading with a short, self-contained answer beneath it
+ * (aim for 40–60 words). Written so it can be quoted on its own.
+ */
+export function Answer({ q, children, more }: { q: string; children: ReactNode; more?: ReactNode }) {
+  return (
+    <section className="border-b border-line">
+      <div className="container py-14 md:py-20 grid gap-6 lg:grid-cols-12 lg:gap-14">
+        <h2 className="h-section lg:col-span-5">{q}</h2>
+        <div className="lg:col-span-7 space-y-4">
+          <p className="lead text-ink">{children}</p>
+          {more}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -208,5 +245,11 @@ export function ArrowLink({ href, children }: { href: string; children: ReactNod
   return <Link href={href} className="link-arrow">{children} <ArrowRight /></Link>;
 }
 
-export const formatDate = (value: string | Date | null | undefined, long = true) =>
-  value ? new Date(value).toLocaleDateString("en-GB", { day: "numeric", month: long ? "long" : "short", year: "numeric" }) : "";
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+/** e.g. "15 March 2026" (or "15 Mar 2026"). Built by hand so server and browser always agree. */
+export const formatDate = (value: string | Date | null | undefined, long = true) => {
+  if (!value) return "";
+  const d = new Date(value);
+  const month = MONTHS[d.getUTCMonth()]!;
+  return `${d.getUTCDate()} ${long ? month : month.slice(0, 3)} ${d.getUTCFullYear()}`;
+};

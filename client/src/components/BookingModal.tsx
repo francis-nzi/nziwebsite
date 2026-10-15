@@ -18,8 +18,14 @@ export interface TrainingSession {
   status: string;
 }
 
-export const sessionDate = (s: { date: string }) =>
-  new Date(s.date + "T00:00:00").toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+/** e.g. "Wednesday 18 November 2026". Built by hand so server and browser always agree. */
+export const sessionDate = (s: { date: string }) => {
+  const [y, m, d] = s.date.split("-").map(Number) as [number, number, number];
+  const weekday = new Date(Date.UTC(y, m - 1, d)).getUTCDay();
+  return `${DAYS[weekday]} ${d} ${MONTHS[m - 1]} ${y}`;
+};
 
 export const MODE_LABEL = { online: "Online", in_person: "In person", hybrid: "Hybrid" } as const;
 

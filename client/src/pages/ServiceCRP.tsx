@@ -1,4 +1,4 @@
-import { ArrowLink, ButtonLink, CheckList, Columns, CTA, FAQ, Page, PageHero, Section, Split, SITE_URL } from "@/components/site";
+import { Answer, ArrowLink, ButtonLink, CTA, CheckList, Columns, FAQ, Page, PageHero, SITE_URL, Section, Split } from "@/components/site";
 
 const included = [
   "Baseline carbon emissions measurement (Scope 1, Scope 2 and relevant Scope 3)",
@@ -68,6 +68,10 @@ export default function ServiceCRP() {
       >
         <ButtonLink href="/contact" arrow>Discuss your requirements</ButtonLink>
       </PageHero>
+
+      <Answer q="What is a Carbon Reduction Plan?">
+        A Carbon Reduction Plan is a short public document that sets out an organisation's current greenhouse gas emissions, its commitment to reach net zero by 2050 at the latest, and the measures it is taking to reduce emissions. UK central government asks for one from suppliers bidding for many larger contracts, and the NHS asks for one from its suppliers.
+      </Answer>
 
       <Section>
         <div className="grid gap-8 lg:grid-cols-12 lg:gap-14">

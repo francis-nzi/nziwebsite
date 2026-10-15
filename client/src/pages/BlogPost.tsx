@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { ButtonLink, CTA, Page, Photo, SITE_URL, formatDate } from "@/components/site";
 import { CATEGORY_LABELS, postImage } from "./Blog";
+import { isServer, ssrState } from "@/lib/ssr";
 
 export default function BlogPost() {
   const { slug = "" } = useParams<{ slug: string }>();
@@ -17,6 +18,7 @@ export default function BlogPost() {
   }
 
   if (isError || !post) {
+    if (isServer && !isError) ssrState.status = 404;
     return (
       <Page seo={{ title: "Article not found", canonical: `/blog/${slug}`, noIndex: true }}>
         <div className="container-narrow py-24 min-h-[60vh]">

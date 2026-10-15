@@ -1,4 +1,4 @@
-import { ArrowLink, ButtonLink, CheckList, Columns, CTA, Page, PageHero, Section, Split, SITE_URL } from "@/components/site";
+import { Answer, ArrowLink, ButtonLink, CTA, CheckList, Columns, Page, PageHero, SITE_URL, Section, Split } from "@/components/site";
 
 const nhsTimeline = [
   { date: "April 2023", event: "Carbon Reduction Plans required for all NHS contracts of £5m a year or more, covering Scope 1, Scope 2 and some Scope 3 emissions." },
@@ -55,6 +55,10 @@ export default function InternationalUK() {
         <ButtonLink href="/contact" arrow>Talk to us about compliance</ButtonLink>
         <ButtonLink href="/services/carbon-reduction-plans" variant="outline">Carbon Reduction Plans</ButtonLink>
       </PageHero>
+
+      <Answer q="What do NHS suppliers need to do by April 2027?">
+        Under the NHS Net Zero Supplier Roadmap, from April 2027 all NHS suppliers will be required to publicly report their targets and emissions and to publish a Carbon Reduction Plan covering their global emissions, aligned to the NHS net zero ambition. For most suppliers that means measuring Scope 3 emissions for the first time.
+      </Answer>
 
       <Section>
         <Split image="hospital-ward.jpg" alt="An empty hospital ward" eyebrow="NHS Evergreen programme" title="April 2027: full Scope 3 for every NHS supplier" flip>

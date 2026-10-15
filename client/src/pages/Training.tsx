@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import BookingModal, { MODE_LABEL, sessionDate, type TrainingSession } from "@/components/BookingModal";
-import { ButtonLink, CheckList, CTA, FAQ, NumberedList, Page, PageHero, Section, Split, SITE_URL } from "@/components/site";
+import { Answer, ButtonLink, CTA, CheckList, FAQ, NumberedList, Page, PageHero, SITE_URL, Section, Split } from "@/components/site";
 
 const modules = [
   { title: "The Science of Climate Change", text: "Understanding the physical science basis, key IPCC findings, and the 1.5°C pathway." },
@@ -111,6 +111,10 @@ export default function Training() {
         <a href="#course-dates" className="btn btn-primary">See course dates</a>
         <ButtonLink href="/contact" variant="outline">Ask about a private course</ButtonLink>
       </PageHero>
+
+      <Answer q="What is the Net Zero Leaders course?">
+        Net Zero Leaders is a one-day, CPD-accredited course for business leaders, sustainability managers and procurement teams. It covers climate science, carbon accounting under the GHG Protocol, science-based targets and the main UK regulations, and helps each participant build a practical net zero roadmap for their own organisation. It runs online or in person.
+      </Answer>
 
       <section className="border-b border-line">
         <dl className="container grid grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-6 py-10">

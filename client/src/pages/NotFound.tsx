@@ -1,6 +1,8 @@
 import { ButtonLink, Page } from "@/components/site";
+import { isServer, ssrState } from "@/lib/ssr";
 
 export default function NotFound() {
+  if (isServer) ssrState.status = 404;
   return (
     <Page seo={{ title: "Page not found", canonical: "/404", noIndex: true }}>
       <section className="container py-24 md:py-36">

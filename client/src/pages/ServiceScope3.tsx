@@ -1,4 +1,4 @@
-import { ArrowLink, ButtonLink, CTA, NumberedList, Page, PageHero, Photo, Section, Split, SITE_URL } from "@/components/site";
+import { Answer, ArrowLink, ButtonLink, CTA, NumberedList, Page, PageHero, Photo, SITE_URL, Section, Split } from "@/components/site";
 
 const upstream = [
   "Purchased goods and services",
@@ -74,6 +74,10 @@ export default function ServiceScope3() {
       >
         <ButtonLink href="/contact" arrow>Start your Scope 3 assessment</ButtonLink>
       </PageHero>
+
+      <Answer q="What are Scope 3 emissions?">
+        Scope 3 emissions are the indirect greenhouse gas emissions in an organisation's value chain: from the goods and services it buys, transport and distribution, business travel, employee commuting and waste, to the use and disposal of what it sells. The GHG Protocol groups them into 15 categories. For most organisations they are the largest share of total emissions.
+      </Answer>
 
       <Section>
         <Split image="trucks.jpg" alt="Aerial view of lorries parked at a logistics depot" eyebrow="Why Scope 3 matters" title="The largest source of emissions, and the most often overlooked">

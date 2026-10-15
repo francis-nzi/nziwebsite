@@ -1,4 +1,4 @@
-import { ButtonLink, CheckList, CTA, Page, PageHero, Photo, Section, Split, SITE_URL } from "@/components/site";
+import { Answer, ButtonLink, CTA, CheckList, Page, PageHero, Photo, SITE_URL, Section, Split } from "@/components/site";
 
 const workshops = [
   {
@@ -64,6 +64,10 @@ export default function ServiceWorkshops() {
       >
         <ButtonLink href="/contact" arrow>Enquire about a workshop</ButtonLink>
       </PageHero>
+
+      <Answer q="What is a net zero strategy workshop?">
+        A net zero strategy workshop is a facilitated session in which an organisation's leadership agrees how it will reach net zero: where its emissions come from, which targets to set, which reduction actions to prioritise and who is responsible for each. It turns a commitment into a practical roadmap the organisation can fund, deliver and report against.
+      </Answer>
 
       <Section>
         <div className="grid gap-8 lg:grid-cols-12 lg:gap-14">

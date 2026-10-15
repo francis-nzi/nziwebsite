@@ -1,4 +1,4 @@
-import { ButtonLink, CheckList, Columns, CTA, FAQ, NumberedList, Page, PageHero, Section, Split, SITE_URL } from "@/components/site";
+import { Answer, ButtonLink, CTA, CheckList, Columns, FAQ, NumberedList, Page, PageHero, SITE_URL, Section, Split } from "@/components/site";
 
 const phases = [
   { title: "Goal and scope definition", text: "We agree the purpose of the study, the functional unit, the system boundaries and the data quality required." },
@@ -62,6 +62,10 @@ export default function ServiceLCA() {
       >
         <ButtonLink href="/contact" arrow>Discuss your LCA requirements</ButtonLink>
       </PageHero>
+
+      <Answer q="What is a life cycle assessment?">
+        A life cycle assessment (LCA) measures the environmental impact of a product or project across its whole life, from raw materials and manufacture through transport and use to disposal. Carried out to ISO 14040 and ISO 14044, it shows where the largest impacts sit and gives credible evidence for procurement responses, product claims and design decisions.
+      </Answer>
 
       <Section>
         <div className="grid gap-8 lg:grid-cols-12 lg:gap-14">
