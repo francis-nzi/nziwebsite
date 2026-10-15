@@ -15,12 +15,6 @@ const ENQUIRY_TYPES = [
   { key: "training_private", label: "Training: private course for our organisation", value: "training", note: "Private course enquiry" },
 ] as const;
 
-const NEXT_STEPS = [
-  "We reply within one working day.",
-  "We arrange a short call to understand what you need, with no obligation.",
-  "We send a proposal setting out scope, timescale and fee.",
-];
-
 export default function Contact() {
   const [form, setForm] = useState({ firstName: "", lastName: "", email: "", organisation: "", phone: "", type: "general", message: "", website: "", consent: false });
   const [submitted, setSubmitted] = useState(false);
@@ -67,7 +61,7 @@ export default function Contact() {
             <div role="status">
               <p className="eyebrow mb-4">Thank you</p>
               <h1 className="h-display">We've received your enquiry</h1>
-              <p className="lead mt-6 max-w-xl">We'll reply to {form.email} within one working day.</p>
+              <p className="lead mt-6 max-w-xl">Thank you for your enquiry. A member of the Net Zero International team will respond to you as soon as possible.</p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href="/" className="btn btn-primary">Back to homepage</Link>
                 <Link href="/blog" className="btn btn-outline">Read our insights</Link>
@@ -144,15 +138,12 @@ export default function Contact() {
               <dd><a href="https://www.linkedin.com/company/76115279" target="_blank" rel="noopener noreferrer" className="font-semibold text-ink hover:text-brand">Net Zero International</a></dd>
             </div>
           </dl>
-          <h2 className="h-sub mt-8 mb-4">What happens next</h2>
-          <ol className="space-y-3">
-            {NEXT_STEPS.map((step, i) => (
-              <li key={step} className="flex gap-4">
-                <span className="font-display font-semibold text-accent-text tabular-nums">{String(i + 1).padStart(2, "0")}</span>
-                <span>{step}</span>
-              </li>
-            ))}
-          </ol>
+          <h2 className="h-sub mt-8 mb-3">Our office</h2>
+          <address className="not-italic">
+            Net Zero International<br />
+            167-169 Great Portland Street<br />
+            London W1W 5PF
+          </address>
           <p className="mt-8 pt-6 border-t border-line">Booking a place on a course? <Link href="/training#course-dates" className="text-link">See training dates</Link>.</p>
         </aside>
       </section>
